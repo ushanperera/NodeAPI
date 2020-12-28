@@ -48,7 +48,7 @@ router.put("/:id", (req, res) => {
 
     db.query(item.updateItemById(item_id), (err, data) => {
         res.status(200).json({
-            message: "Product Updated.",
+            message: "Item Updated.",
             item_id: data.affectedRows
         });
     });
@@ -73,7 +73,7 @@ router.post("/add", (req, res, next) => {
 
     db.query(item.addItem(), (err, data) => {
         res.status(200).json({
-            message: "Product added.",
+            message: "Item added.",
             item_id: data.insertId
         });
     });
