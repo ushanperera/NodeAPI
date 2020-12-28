@@ -16,6 +16,7 @@
     "express": "^4.16.4",
     "http": "0.0.0",
     "joi": "^14.3.1",
+    "mqtt": "^4.2.6",
     "mysql": "^2.16.0"
   },
   "devDependencies": {

@@ -22,7 +22,7 @@ router.post("/add", (req, res, next) => {
     db.query(group.addGroup(), (err, data) => {
         res.status(200).json({
             message: "Group added.",
-            categoryID: data.insertId
+            groupID: data.insertId
         });
     });
 });

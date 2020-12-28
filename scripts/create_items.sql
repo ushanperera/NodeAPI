@@ -6,7 +6,7 @@ CREATE TABLE IF NOT EXISTS items(
     type VARCHAR(50),
     name VARCHAR(50),
     state BOOLEAN DEFAULT 1,
-    categoryID INT NOT NULL,
+    groupID INT NOT NULL,
     macAddress VARCHAR(50),
     active BOOLEAN DEFAULT 1,
     itemIcon VARCHAR(50),
@@ -15,10 +15,10 @@ CREATE TABLE IF NOT EXISTS items(
 
 -- Insert in to item Table --------------------------------
 
-INSERT INTO items (type,name,state,categoryID) VALUES('light','FishTank Light',1,1);
-INSERT INTO items (type,name,state,categoryID) VALUES('light','Main Light',1,1);
-INSERT INTO items (type,name,state,categoryID) VALUES('light','bulb 001',1,1);
-INSERT INTO items (type,name,state,categoryID) VALUES('light','Arduino',1,3);
+INSERT INTO items (type,name,state,groupID) VALUES('light','FishTank Light',1,1);
+INSERT INTO items (type,name,state,groupID) VALUES('light','Main Light',1,1);
+INSERT INTO items (type,name,state,groupID) VALUES('light','bulb 001',1,1);
+INSERT INTO items (type,name,state,groupID) VALUES('light','Arduino',1,3);
 
 
 
