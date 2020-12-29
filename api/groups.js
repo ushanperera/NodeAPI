@@ -14,7 +14,7 @@ router.get("/", (req, res, next) => {
 });
 
 //http://192.168.123.199:6001/groups/add
-// {"name": "Catagory 001"}
+// {"name": "groupID 001"}
 router.post("/add", (req, res, next) => {
     // res.send('Hello category!');
     let group = new Group(req.body.name);
@@ -28,7 +28,7 @@ router.post("/add", (req, res, next) => {
 });
 
 // http://192.168.123.199:6001/groups/2
-// { "name": "Catagory 002" }
+// { "name": "groupID 002" }
 router.put("/:id", (req, res) => {   
     let group_id = req.params.id;
     let group_name = req.body.name;

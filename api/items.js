@@ -53,13 +53,25 @@ router.put("/:id", (req, res) => {
     let item = new Item(item_type, item_name, item_state, item_groupID, item_macAddress, item_active, item_Icon)
 
     db.query(item.updateItemById(item_id), (err, data) => {
-        res.status(200).json({
-            message: "Item Updated."//,
-            // affectedRows: data.affectedRows
-        });
+        if (!err) {
+            console.log(data);
+            
+            if (data && data.affectedRows > 0) {
+                res.status(200).json({
+                    message: "Item Updated",
+                    affectedRows: data.affectedRows
+                });
+            } else {
+                res.status(200).json({
+                    message: "Item Not found."
+                });
+            }
+        }
     });
 
-// MQTT Call----------
+
+
+//----------------MQTT Call-----------------------------------
 var mqttClient = new mqttHandler();
 mqttClient.connect();
 
