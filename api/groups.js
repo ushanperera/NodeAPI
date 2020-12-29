@@ -30,29 +30,29 @@ router.post("/add", (req, res, next) => {
 // http://192.168.123.199:6001/groups/2
 // { "name": "Catagory 002" }
 router.put("/:id", (req, res) => {   
-    let category_id = req.params.id;
-    let categoryname = req.body.name;
+    let group_id = req.params.id;
+    let group_name = req.body.name;
     // res.send(req.body);
 
-    let group = new Group(categoryname);
+    let group = new Group(group_name);
 
-    db.query(group.updateGroupById(category_id), (err, data) => {
+    db.query(group.updateGroupById(group_id), (err, data) => {
         res.status(200).json({
             message: "Group Updated.",
-            category_id: data.affectedRows
+            group_id: data.affectedRows
         });
     });
 });
 
 // http://192.168.123.199:6001/groups/delete/2
 router.delete("/delete/:id", (req, res, next) => {
-    var category_id = req.params.id;
+    var group_id = req.params.id;
 
-    db.query(Group.deleteGroupById(category_id), (err, data) => {
+    db.query(Group.deleteGroupById(group_id), (err, data) => {
         if (!err) {
             if (data && data.affectedRows > 0) {
                 res.status(200).json({
-                    message: `Group deleted with id = ${category_id}.`,
+                    message: `Group deleted with id = ${group_id}.`,
                     affectedRows: data.affectedRows
                 });
             } else {

@@ -39,17 +39,23 @@ router.get("/:Id", (req, res, next) => {
 // {"name": "Item 091","state": "true"}
 router.put("/:id", (req, res) => {
     // res.send('Hello item!');
-   
+
     let item_id = req.params.id;
+    let item_type = req.body.type;
     let item_name = req.body.name;
     let item_state = req.body.state == true ? '1' : '0';
+    let item_groupID = req.body.groupID;
+    let item_macAddress = req.body.macAddress;
+    let item_active = req.body.active == true ? '1' : '0';
+    let item_Icon = req.body.itemIcon;
 
-    let item = new Item(item_name, item_state);
+
+    let item = new Item(item_type, item_name, item_state, item_groupID, item_macAddress, item_active, item_Icon)
 
     db.query(item.updateItemById(item_id), (err, data) => {
         res.status(200).json({
-            message: "Item Updated.",
-            item_id: data.affectedRows
+            message: "Item Updated."//,
+            // affectedRows: data.affectedRows
         });
     });
 
@@ -74,7 +80,7 @@ router.post("/add", (req, res, next) => {
     db.query(item.addItem(), (err, data) => {
         res.status(200).json({
             message: "Item added.",
-            item_id: data.insertId
+            affectedRows: data.insertId
         });
     });
 });
