@@ -19,7 +19,7 @@ CREATE TABLE IF NOT EXISTS items(
 INSERT INTO items (type,name,state,groupID,macAddress,active,itemIcon) VALUES( 'light','FishTank', true,1,'00-D0-56-F2-B5-19',true,'light');
 INSERT INTO items (type,name,state,groupID,macAddress,active,itemIcon) VALUES( 'light','Main Light', true,1,'00-D0-56-F2-B5-20',true,'light');
 INSERT INTO items (type,name,state,groupID,macAddress,active,itemIcon) VALUES( 'light','bulb 001', true,1,'00-D0-56-F2-B5-21',true,'light');
-INSERT INTO items (type,name,state,groupID,macAddress,active,itemIcon) VALUES( 'light','Arduino', true,1,'00-D0-56-F2-B5-22',true,'light');
+INSERT INTO items (type,name,state,groupID,macAddress,active,itemIcon) VALUES( 'light','Arduino', true,3,'00-D0-56-F2-B5-22',true,'light');
 
 INSERT INTO items (type,name,state,groupID,macAddress,active,itemIcon) VALUES( 'powerPlug','Power Plug', true,5,'00-D0-56-F2-B5-12',true,'powerPlug');
 INSERT INTO items (type,name,state,groupID,macAddress,active,itemIcon) VALUES( 'colorLight','Color light', true,5,'00-D0-56-F2-B5-13',true,'colorLight');
