@@ -6,6 +6,10 @@ const router = express.Router();
 
 const mqttHandler = require('../mqtt/mqtt_handler');
 
+var resStatus = new Enum({'Ok': 200, 'BadRequest.': 400, 'Forbidden': 403, 'NotFound': 404, 'InternalServerError': 500});
+var resCode = new Enum({'Success': 1, 'NoRecordsFound': 0, 'Error': 3});
+
+
 
 //http://192.168.123.199:6001/items 
 router.get("/", (req, res, next) => {
@@ -59,11 +63,13 @@ router.put("/:id", (req, res) => {
             if (data && data.affectedRows > 0) {
                 res.status(200).json({
                     message: "Item Updated",
-                    affectedRows: data.affectedRows
+                    affectedRows: data.affectedRows,
+                    resultCode: resCode.Success
                 });
             } else {
                 res.status(200).json({
-                    message: "Item Not found."
+                    message: "Item Not found.",
+                    resultCode: resCode.NoRecordsFound
                 });
             }
         }
