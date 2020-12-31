@@ -79,15 +79,15 @@ router.put("/:id", (req, res) => {
 
 
 //----------------MQTT Call-----------------------------------
-console.log("_<<<<<<<<<<____MQTT Call-___>>>>>>>");
+    console.log("_<<<<<<<<<<____MQTT Call-___>>>>>>>");
 
 var mqttClient = new mqttHandler();
 mqttClient.connect();
 
 // mqttClient.sendMessage("Subject001", item_state);
-mqttClient.sendMessage(item_macAddress, item_state);
+mqttClient.sendMessage(item_macAddress, item_state=="1" ? "SwitchOn" : "SwitchOff");
 // console.log(req.body);
-console.log("subject :"  + item_macAddress + "State  : " + item_state);
+// console.log("subject :"  + item_macAddress + " State  : " + item_state);
 // -------------------
 
 });
