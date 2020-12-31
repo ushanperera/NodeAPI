@@ -30,6 +30,22 @@ class Item {
         active = '${this.item_active}', \
         itemIcon = '${this.item_Icon}' \
         WHERE itemID = ${item_id}`;
+
+        return sql;
+    }
+
+    updateStatusById(item_id, state) {
+        let sql = `UPDATE items SET \
+        state = '${state}' \
+        WHERE itemID = ${item_id}`;
+        
+        return sql;
+    }
+
+    updateGroupById(item_id, groupId) {
+        let sql = `UPDATE items SET \
+        groupID = '${groupId}' \
+        WHERE itemID = ${item_id}`;
         
         return sql;
     }

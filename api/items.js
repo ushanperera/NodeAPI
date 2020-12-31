@@ -89,6 +89,49 @@ mqttClient.sendMessage(item_macAddress, item_state=="1" ? "SwitchOn" : "SwitchOf
 
 });
 
+
+router.put("/status", (req, res) => {
+    let item_id = req.body.itemID;
+    let item_state = req.body.state == true ? '1' : '0';
+
+    db.query(item.updateStatusById(item_id, item_state), (err, data) => {
+        if (!err) {            
+            if (data && data.affectedRows > 0) {
+                res.status(200).json({
+                    message: "Item Updated",
+                    affectedRows: data.affectedRows,
+                });
+            } else {
+                res.status(200).json({
+                    message: "Item Not found.",
+                });
+            }
+        }
+    });
+});
+
+
+router.put("/group", (req, res) => {
+    let item_id = req.body.itemID;
+    let item_groupID = req.body.groupID;
+
+    db.query(item.updateGroupById(item_id, item_groupID), (err, data) => {
+        if (!err) {            
+            if (data && data.affectedRows > 0) {
+                res.status(200).json({
+                    message: "Item Updated",
+                    affectedRows: data.affectedRows,
+                });
+            } else {
+                res.status(200).json({
+                    message: "Item Not found.",
+                });
+            }
+        }
+    });
+});
+
+
 ////http://192.168.123.199:6001/items/add
 // {"name": "Item 091","state": "true"}
 router.post("/add", (req, res, next) => {
@@ -104,7 +147,7 @@ router.post("/add", (req, res, next) => {
 });
 
 router.delete("/delete", (req, res, next) => {
-    var item_id = req.body.item_id;
+    var item_id = req.body.itemID;
 
     db.query(Item.deleteItemById(item_id), (err, data) => {
         if (!err) {
