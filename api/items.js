@@ -55,8 +55,6 @@ router.put("/:id", (req, res) => {
 
     let item = new Item(item_type, item_name, item_state, item_groupID, item_macAddress, item_active, item_Icon)
 
-    console.log("_<<<<<<<<<<_____API___>>>>>>>");
-
     db.query(item.updateItemById(item_id), (err, data) => {
         if (!err) {
             // console.log(data);
@@ -79,7 +77,6 @@ router.put("/:id", (req, res) => {
 
 
 //----------------MQTT Call-----------------------------------
-    console.log("_<<<<<<<<<<____MQTT Call-___>>>>>>>");
 
 var mqttClient = new mqttHandler();
 mqttClient.connect();
