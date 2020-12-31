@@ -94,7 +94,7 @@ router.put("/status", (req, res) => {
     let item_id = req.body.itemID;
     let item_state = req.body.state == true ? '1' : '0';
 
-    db.query(item.updateStatusById(item_id, item_state), (err, data) => {
+    db.query(Item.updateStatusById(item_id, item_state), (err, data) => {
         if (!err) {            
             if (data && data.affectedRows > 0) {
                 res.status(200).json({
@@ -115,7 +115,7 @@ router.put("/group", (req, res) => {
     let item_id = req.body.itemID;
     let item_groupID = req.body.groupID;
 
-    db.query(item.updateGroupById(item_id, item_groupID), (err, data) => {
+    db.query(Item.updateGroupById(item_id, item_groupID), (err, data) => {
         if (!err) {            
             if (data && data.affectedRows > 0) {
                 res.status(200).json({

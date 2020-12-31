@@ -34,7 +34,7 @@ class Item {
         return sql;
     }
 
-    updateStatusById(item_id, state) {
+    static updateStatusById(item_id, state) {
         let sql = `UPDATE items SET \
         state = '${state}' \
         WHERE itemID = ${item_id}`;
@@ -42,7 +42,7 @@ class Item {
         return sql;
     }
 
-    updateGroupById(item_id, groupId) {
+   static updateGroupById(item_id, groupId) {
         let sql = `UPDATE items SET \
         groupID = '${groupId}' \
         WHERE itemID = ${item_id}`;
