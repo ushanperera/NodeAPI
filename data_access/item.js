@@ -30,7 +30,7 @@ class Item {
         active = '${this.item_active}', \
         itemIcon = '${this.item_Icon}' \
         WHERE itemID = ${item_id}`;
-        console.log (sql);
+        
         return sql;
     }
 

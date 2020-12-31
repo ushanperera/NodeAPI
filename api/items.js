@@ -6,8 +6,8 @@ const router = express.Router();
 
 const mqttHandler = require('../mqtt/mqtt_handler');
 
-var resStatus = new Enum({'Ok': 200, 'BadRequest.': 400, 'Forbidden': 403, 'NotFound': 404, 'InternalServerError': 500});
-var resCode = new Enum({'Success': 1, 'NoRecordsFound': 0, 'Error': 3});
+// var resStatus = new Enum({'Ok': 200, 'BadRequest.': 400, 'Forbidden': 403, 'NotFound': 404, 'InternalServerError': 500});
+// var resCode = new Enum({'Success': 1, 'NoRecordsFound': 0, 'Error': 3});
 
 
 
@@ -53,23 +53,24 @@ router.put("/:id", (req, res) => {
     let item_active = req.body.active == true ? '1' : '0';
     let item_Icon = req.body.itemIcon;
 
-
     let item = new Item(item_type, item_name, item_state, item_groupID, item_macAddress, item_active, item_Icon)
+
+    console.log("_<<<<<<<<<<_____API___>>>>>>>");
 
     db.query(item.updateItemById(item_id), (err, data) => {
         if (!err) {
-            console.log(data);
+            // console.log(data);
             
             if (data && data.affectedRows > 0) {
                 res.status(200).json({
                     message: "Item Updated",
                     affectedRows: data.affectedRows,
-                    resultCode: resCode.Success
+                    // resultCode: resCode.Success
                 });
             } else {
                 res.status(200).json({
                     message: "Item Not found.",
-                    resultCode: resCode.NoRecordsFound
+                    // resultCode: resCode.NoRecordsFound
                 });
             }
         }
@@ -78,13 +79,15 @@ router.put("/:id", (req, res) => {
 
 
 //----------------MQTT Call-----------------------------------
+console.log("_<<<<<<<<<<____MQTT Call-___>>>>>>>");
+
 var mqttClient = new mqttHandler();
 mqttClient.connect();
 
-mqttClient.sendMessage("Subject001", item_state);
-console.log(req.body);
-console.log(item_state);
-
+// mqttClient.sendMessage("Subject001", item_state);
+mqttClient.sendMessage(item_macAddress, item_state);
+// console.log(req.body);
+console.log("subject :"  + item_macAddress + "State  : " + item_state);
 // -------------------
 
 });
