@@ -6,7 +6,7 @@ CREATE TABLE IF NOT EXISTS items(
     type VARCHAR(50),
     name VARCHAR(50),
     state BOOLEAN DEFAULT 1,
-    groupID INT NOT NULL,
+    groupID INT,
     macAddress VARCHAR(50),
     active BOOLEAN DEFAULT 1,
     itemIcon VARCHAR(50),
@@ -49,4 +49,10 @@ INSERT INTO items (type,name,state,groupID,macAddress,active,itemIcon) VALUES( '
 INSERT INTO items (type,name,state,groupID,macAddress,active,itemIcon) VALUES( 'light','Desk Lamp', false,15,'00-D0-56-F2-B5-30',false,'deskLamp');
 INSERT INTO items (type,name,state,groupID,macAddress,active,itemIcon) VALUES( 'light','Ceiling Light', true,15,'00-D0-56-F2-B5-31',true,'ceilingLight');
 
+
+INSERT INTO items (type,name,state,groupID,macAddress,active,itemIcon) VALUES( 'powerPlug','Garage A ', true,null,'00-D0-56-F2-B5-27',false,'garage');
+INSERT INTO items (type,name,state,groupID,macAddress,active,itemIcon) VALUES( 'powerPlug','Room Door', true,null,'00-D0-56-F2-B5-28',false,'door');
+INSERT INTO items (type,name,state,groupID,macAddress,active,itemIcon) VALUES( 'light','Coach Lamp 1', false,null,'00-D0-56-F2-B5-29',false,'coachLamp');
+INSERT INTO items (type,name,state,groupID,macAddress,active,itemIcon) VALUES( 'light','Desk Lamp 1 ', false,null,'00-D0-56-F2-B5-30',false,'deskLamp');
+INSERT INTO items (type,name,state,groupID,macAddress,active,itemIcon) VALUES( 'light','Ceiling Light2 ', true,null,'00-D0-56-F2-B5-31',true,'ceilingLight');
 
