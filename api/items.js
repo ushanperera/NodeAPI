@@ -24,87 +24,71 @@ router.get("/", (req, res, next) => {
     });
 });
 
-// //http://192.168.123.199:6001/items/1 
-// router.get("/:Id", (req, res, next) => {
-//     let itemID = req.params.Id;
+//http://192.168.123.199:6001/items/1 
+router.get("/:Id", (req, res, next) => {
+    let itemID = req.params.Id;
 
-//     db.query(Item.getItemById(itemID), (err, data) => {
-//         if (!err) {
-//             if (data && data.length > 0) {
-//                 res.status(200).json({
-//                     data
-//                 });
-//             } else {
-//                 res.status(200).json({
-//                     message: "Item Not found."
-//                 });
-//             }
-//         }
-//     });
-// });
-
-
-// ////http://192.168.123.199:6001/items/1 
-// // {"name": "Item 091","state": "true"}
-// router.put("/:id", (req, res) => {
-//     // res.send('Hello item!');
-
-//     let item_id = req.params.id;
-//     let item_type = req.body.type;
-//     let item_name = req.body.name;
-//     let item_state = req.body.state == true ? '1' : '0';
-//     let item_groupID = req.body.groupID;
-//     let item_macAddress = req.body.macAddress;
-//     let item_active = req.body.active == true ? '1' : '0';
-//     let item_Icon = req.body.itemIcon;
-
-//     let item = new Item(item_type, item_name, item_state, item_groupID, item_macAddress, item_active, item_Icon)
-
-//     db.query(item.updateItemById(item_id), (err, data) => {
-//         if (!err) {
-//             // console.log(data);
-
-//             if (data && data.affectedRows > 0) {
-//                 res.status(200).json({
-//                     message: "Item Updated",
-//                     affectedRows: data.affectedRows,
-//                     // resultCode: resCode.Success
-//                 });
-//             } else {
-//                 res.status(200).json({
-//                     message: "Item Not found.",
-//                     // resultCode: resCode.NoRecordsFound
-//                 });
-//             }
-//         }
-//     });
+    db.query(Item.getItemById(itemID), (err, data) => {
+        if (!err) {
+            if (data && data.length > 0) {
+                res.status(200).json({
+                    data
+                });
+            } else {
+                res.status(200).json({
+                    message: "Item Not found."
+                });
+            }
+        }
+    });
+});
 
 
+////http://192.168.123.199:6001/items/1 
+// {"name": "Item 091","state": "true"}
+router.put("/", (req, res) => {
+    // res.send('Hello item!');
 
-//     //----------------MQTT Call-----------------------------------
+    let item_id = req.body.id;
+    let item_type = req.body.type;
+    let item_name = req.body.name;
+    let item_macAddress = req.body.macAddress;
+    let item_active = req.body.active == true ? '1' : '0';
+    let item_Icon = req.body.itemIcon;
 
-//     var mqttClient = new mqttHandler();
-//     mqttClient.connect();
+    let item = new Item(item_type, item_name, item_macAddress, item_active, item_Icon)
 
-//     // mqttClient.sendMessage("Subject001", item_state);
-//     mqttClient.sendMessage(item_macAddress, item_state == "1" ? "SwitchOn" : "SwitchOff");
-//     // console.log(req.body);
-//     // console.log("subject :"  + item_macAddress + " State  : " + item_state);
-//     // -------------------
+    db.query(item.updateItemById(item_id), (err, data) => {
+        if (!err) {
+            // console.log(data);
 
-// });
+            if (data && data.affectedRows > 0) {
+                res.status(200).json({
+                    message: "Item Updated",
+                    affectedRows: data.affectedRows,
+                    // resultCode: resCode.Success
+                });
+            } else {
+                res.status(200).json({
+                    message: "Item Not found.",
+                    // resultCode: resCode.NoRecordsFound
+                });
+            }
+        }
+    });
+});
 
 
 router.put("/status", (req, res) => {
-
     let item_id = req.body.itemID;
     let item_state = req.body.state == true ? '1' : '0';
+    let item_macAddress = req.body.macAddress;
 
-    console.log(item_id + item_state);
+    // console.log(item_id + item_state);
     // res.send(item_id + item_state);
 
     db.query(Item.updateStatusById(item_id, item_state), (err, data) => {
-        if (!err) {            
+        if (!err) {
             if (data && data.affectedRows > 0) {
                 res.status(200).json({
                     message: "Item Updated",
@@ -117,13 +101,23 @@ router.put("/status", (req, res) => {
             }
         }
     });
+
+
+    //----------------MQTT Call-----------------------------------
+    var mqttClient = new mqttHandler();
+    mqttClient.connect();
+
+    // mqttClient.sendMessage("Subject001", "item_state");
+    mqttClient.sendMessage(item_macAddress, item_state == "1" ? "SwitchOn" : "SwitchOff");
+    // console.log(req.body);
+    // console.log("subject :"  + item_macAddress + " State  : " + item_state);
+    
 });
 
 
 router.put("/group", (req, res) => {
     let item_id = req.body.itemID;
     let item_groupID = req.body.groupID;
-
 
     // console.log(item_id + item_groupID);
     // res.send(item_id + item_groupID);
@@ -141,8 +135,6 @@ router.put("/group", (req, res) => {
                 });
             }
         }
-        else
-        console.log(err);
     });
 
 });

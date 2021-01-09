@@ -1,10 +1,10 @@
 class Item {
-    constructor(type, name, state, groupID, macAddress, active, itemIcon) {
+    constructor(type, name, macAddress, active, itemIcon) {
         this.itemID = 0;
         this.item_type = type;
         this.item_name = name;
-        this.item_state = state;
-        this.item_groupID = groupID;
+        // this.item_state = state;
+        // this.item_groupID = groupID;
         this.item_macAddress = macAddress;
         this.item_active = active;
         this.item_Icon = itemIcon;
@@ -23,9 +23,7 @@ class Item {
     updateItemById(item_id) {
         let sql = `UPDATE items SET \
         type = '${this.item_type}', \
-        state = '${this.item_state}', \
         name = '${this.item_name}', \
-        groupID = '${this.item_groupID}', \
         macAddress = '${this.item_macAddress}', \
         active = '${this.item_active}', \
         itemIcon = '${this.item_Icon}' \
