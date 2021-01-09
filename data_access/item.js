@@ -1,13 +1,13 @@
 class Item {
     constructor(type, name, state, groupID, macAddress, active, itemIcon) {
         this.itemID = 0;
-        this.item_type=type;
+        this.item_type = type;
         this.item_name = name;
         this.item_state = state;
-        this.item_groupID=groupID;
-        this.item_macAddress=macAddress;
-        this.item_active=active;
-        this.item_Icon=itemIcon;
+        this.item_groupID = groupID;
+        this.item_macAddress = macAddress;
+        this.item_active = active;
+        this.item_Icon = itemIcon;
     }
 
     static getAllItems() {
@@ -37,17 +37,17 @@ class Item {
     static updateStatusById(item_id, state) {
         let sql = `UPDATE items SET \
         state = '${state}' \
-        WHERE itemID = ${item_id}`;        
-        // console.log(+sql);
+        WHERE itemID = ${item_id}`;
+        // console.log(sql);
 
         return sql;
     }
 
-   static updateGroupById(item_id, groupId) {
+    static updateGroupById(item_id, groupId) {
         let sql = `UPDATE items SET \
         groupID = '${groupId}' \
         WHERE itemID = ${item_id}`;
-        
+
         return sql;
     }
 

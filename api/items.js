@@ -125,7 +125,7 @@ router.put("/group", (req, res) => {
     let item_groupID = req.body.groupID;
 
 
-    //console.log(item_id + item_state);
+    // console.log(item_id + item_groupID);
     // res.send(item_id + item_groupID);
 
     db.query(Item.updateGroupById(item_id, item_groupID), (err, data) => {
@@ -141,6 +141,8 @@ router.put("/group", (req, res) => {
                 });
             }
         }
+        else
+        console.log(err);
     });
 
 });
