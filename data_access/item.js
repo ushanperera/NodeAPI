@@ -37,8 +37,9 @@ class Item {
     static updateStatusById(item_id, state) {
         let sql = `UPDATE items SET \
         state = '${state}' \
-        WHERE itemID = ${item_id}`;
-        
+        WHERE itemID = ${item_id}`;        
+        // console.log(+sql);
+
         return sql;
     }
 
