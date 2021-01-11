@@ -5,6 +5,7 @@ const Joi = require('joi') // validation(isValid)
 
 const items = require('./api/items')
 const groups = require('./api/groups')
+const users = require('./api/users')
 
 // const mqttHandler = require('./mqtt/mqtt_handler');
 
@@ -19,6 +20,7 @@ app.use(bodyparser.urlencoded({ extended: false }));
 // app.use("/orders", orders);
 app.use("/items", items);
 app.use("/groups", groups);
+app.use("/users", users);
 
 //MQTT------------------------------------------------------------------
 // var mqttClient = new mqttHandler();
