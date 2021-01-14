@@ -6,7 +6,7 @@ class Group {
     }
 
     static getAllGroups() {
-        let sql = 'SELECT * FROM groups';
+        let sql = 'SELECT * FROM groups  WHERE  groupID <> -1';
         return sql;
     }
 
