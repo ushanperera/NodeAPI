@@ -84,6 +84,7 @@ router.put("/status", (req, res) => {
     let item_state = req.body.state == true ? '1' : '0';
     let item_macAddress = req.body.macAddress;
 
+
     // console.log(item_id + item_state);
     // res.send(item_id + item_state);
 
