@@ -1,10 +1,10 @@
 const express = require('express');
-const db = require('../db/database');
+const db = require('../helpers/database');
 
-const Item = require('../data_access/item');
+const Item = require('../Models/item');
 const router = express.Router();
 
-const mqttHandler = require('../mqtt/mqtt_handler');
+const mqttHandler = require('../helpers/mqtt_handler');
 
 // var resStatus = new Enum({'Ok': 200, 'BadRequest.': 400, 'Forbidden': 403, 'NotFound': 404, 'InternalServerError': 500});
 // var resCode = new Enum({'Success': 1, 'NoRecordsFound': 0, 'Error': 3});
@@ -12,7 +12,6 @@ const mqttHandler = require('../mqtt/mqtt_handler');
 router.get("/test", (req, res, next) => {
     res.send('Hello!');
 });
-
 
 
 //http://192.168.123.199:6001/items 
@@ -84,6 +83,14 @@ router.put("/status", (req, res) => {
     let item_state = req.body.state == true ? '1' : '0';
     let item_macAddress = req.body.macAddress;
 
+     if(!item_id || item_id < 1){
+        res.status(404).send('name is required')
+        return;
+     }
+     else if(!item_id || item_id < 1){
+        res.status(404).send('name is required')
+        return;
+     }
 
     // console.log(item_id + item_state);
     // res.send(item_id + item_state);

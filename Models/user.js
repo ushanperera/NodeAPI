@@ -35,6 +35,12 @@ class User {
         return sql;
     }
 
+    registerUser(userName, password) {
+        let sql = `INSERT INTO tblUser (userName, password)\
+                   VALUES('${this.userName}', '${this.password}')`;
+        return sql;
+    }
+
 
 }
 

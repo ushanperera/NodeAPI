@@ -1,7 +1,7 @@
 const express = require('express');
-const db = require('../db/database');
+const db = require('../helpers/database');
 
-const Group = require('../data_access/group');
+const Group = require('../Models/group');
 const router = express.Router();
 
 //http://192.168.123.199:6001/groups
