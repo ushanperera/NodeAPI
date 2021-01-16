@@ -4,8 +4,8 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "start": "nodemon server.js --exec babel-node --presets env",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "echo \"Starting Production envoronment\" && node server.js",
+    "dev": "echo \"Starting Dev envoronment\" && nodemon server.js"
   },
   "keywords": [],
   "author": "",
@@ -20,11 +20,9 @@
     "jsonwebtoken": "^8.5.1",
     "mqtt": "^4.2.6",
     "mysql": "^2.16.0"
+    
   },
   "devDependencies": {
-    "babel-cli": "^6.26.0",
-    "babel-core": "^6.26.3",
-    "babel-preset-env": "^1.7.0",
-    "nodemon": "^1.19.4"
+    "nodemon": "^2.0.7"
   }
 }

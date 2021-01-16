@@ -4,6 +4,10 @@
 # node server.js
 # nodemon server.js -- to execute the project
 
+# npm run start -> for the Dev Environment
+# npm run dev -> for the Dev Environment
+
+
 # node server.js & -> server
 # service nginx start 
 

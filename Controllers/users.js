@@ -16,17 +16,17 @@ router.post('/register', async (req, res) => {
         const hashedPassword = await bcrypt.hash(req.body.password, 10);
         const userName = req.body.userName;
 
-        // db.query(user.registerUser(userName, hashedPassword), (err, data) => {
-        //     res.status(201).json({
-        //         message: "User added.",
-        //         userId: data.userId
-        //     });
-        // });
+        db.query(user.registerUser(userName, hashedPassword), (err, data) => {
+            res.status(201).json({
+                message: "User added.",
+                userId: data.userId
+            });
+        });
 
-    //}
+    // }
     // catch
     // {
-    //     // res.status(500).send()
+    //     res.status(500).send()
     // }
 })
 
@@ -46,16 +46,7 @@ router.post('/register', async (req, res) => {
 //     }
 // })
 
-app.post('/usersss', async (req, res) => {
-    try {
-      const hashedPassword = await bcrypt.hash(req.body.password, 10)
-      const user = { name: req.body.name, password: hashedPassword }
-      users.push(user)
-      res.status(201).send()
-    } catch {
-      res.status(500).send()
-    }
-  })
+
 
 
 router.get("/", (req, res, next) => {
