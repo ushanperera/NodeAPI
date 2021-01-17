@@ -6,7 +6,7 @@ const router = express.Router();
 
 //http://192.168.123.199:6001/groups
 router.get("/", (req, res, next) => {
-    db.query(Group.getAllGroups() , (err, data) => {
+    db.query(Group.getAllGroups(), (err, data) => {
         if (!err) {
             res.status(200).json(data);
         }
@@ -29,7 +29,7 @@ router.post("/add", (req, res, next) => {
 
 // http://192.168.123.199:6001/groups/2
 // { "name": "groupID 002" }
-router.put("/:id", (req, res) => {   
+router.put("/:id", (req, res) => {
     let group_id = req.params.id;
     let group_name = req.body.name;
     // res.send(req.body);

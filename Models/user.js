@@ -7,24 +7,29 @@ class User {
         this.admin = admin == true ? '1' : '0';
     }
 
-    static getAllUsers() {
-        let sql = `SELECT * FROM tblUser`;
+    static getAllUsers(userId) {
+        let sql = `SELECT * FROM user`;
+        return sql;
+    }
+
+    static getUserByUserName(userName) {
+        let sql = `SELECT * FROM user WHERE userName = '${userName}'`;
         return sql;
     }
 
     addUser() {
-        let sql = `INSERT INTO tblUser (firstName,lastName,email,active,admin)\
+        let sql = `INSERT INTO user (firstName,lastName,email,active,admin)\
                    VALUES('${this.firstName}','${this.lastName}','${this.email}','${this.active}','${this.admin}')`;
         return sql;
     }
 
     static deleteUser(userId) {
-        let sql = `DELETE FROM tblUser WHERE userId = '${userId}'`;
+        let sql = `DELETE FROM user WHERE userId = '${userId}'`;
         return sql;
     }
 
     updateUser(userId) {
-        let sql = `UPDATE tblUser SET \
+        let sql = `UPDATE user SET \
         firstName = '${this.firstName}', \
         lastName = '${this.lastName}', \
         email = '${this.email}', \
@@ -35,9 +40,9 @@ class User {
         return sql;
     }
 
-    registerUser(userName, password) {
-        let sql = `INSERT INTO tblUser (userName, password)\
-                   VALUES('${this.userName}', '${this.password}')`;
+    static registerUser(userName, password) {
+        let sql = `INSERT INTO user (userName, password)\
+                   VALUES('${userName}', '${password}')`;
         return sql;
     }
 

@@ -1,7 +1,7 @@
 const express = require('express');
 const bodyparser = require('body-parser')
 const cors = require('cors')
-const Joi = require('@hapi/joi') 
+const Joi = require('@hapi/joi')
 
 const items = require('./Controllers/items')
 const groups = require('./Controllers/groups')
@@ -19,6 +19,8 @@ app.use(bodyparser.urlencoded({ extended: false }));
 app.use("/items", items);
 app.use("/groups", groups);
 app.use("/users", users);
+
+
 
 //MQTT------------------------------------------------------------------
 // var mqttClient = new mqttHandler();

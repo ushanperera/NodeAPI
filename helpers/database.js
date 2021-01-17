@@ -2,40 +2,42 @@ const mysql = require('mysql');
 
 
 const pool = mysql.createPool({
-            connectionLimit : 10,
-            host     : '127.0.0.1',
-            user     : 'phpmyadmin',
-            password : '123',
-            database : 'Credenza',
-            debug    : true 
-            });                    
+    connectionLimit: 10,
+    host: 'localhost',
+    user: 'phpmyadmin',
+    password: '123',
+    database: 'Credenza',
+    debug: false
+});
 
 function executeQuery(sql, callback) {
-    pool.getConnection((err,connection) => {
-        if(err) {
+    pool.getConnection((err, connection) => {
+        if (err) {
             return callback(err, null);
         } else {
-            if(connection) {
+            if (connection) {
                 connection.query(sql, function (error, results, fields) {
-                connection.release();
-                if (error) {
-                    return callback(error, null);
-                } 
-                return callback(null, results);
+                    connection.release();
+                    if (error) {
+                        return callback(error, null);
+                    }
+                    return callback(null, results);
                 });
             }
         }
     });
 }
 
-function query(sql, callback) {    
-    executeQuery(sql,function(err, data) {
-        if(err) {
+
+function query(sql, callback) {
+    executeQuery(sql, function (err, data) {
+        if (err) {
             return callback(err);
-        }       
+        }
         callback(null, data);
     });
 }
+
 
 module.exports = {
     query: query

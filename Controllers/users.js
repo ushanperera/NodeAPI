@@ -1,68 +1,103 @@
 const express = require('express');
-const db = require('../helpers/database');
+const bcrypt = require('bcrypt')
 
-const User = require('../Models/user');
-const { authSchema, } = require('../helpers/validation');
+const db = require('../helpers/database');
+const user = require('../Models/user');
+
+const statusCodes = require('../helpers/httpStatusCodes')
+const { validateRegister } = require('../helpers/validation');
+
 const router = express.Router();
 
-//const bcrypt = require('bcrypt')
-
-const app = express()
 
 
-router.post('/register', async (req, res) => {
+// router.get("/test", (req, res, next) => {
+//     res.send('Hello!');
+// });
 
-    //try {
-        const hashedPassword = await bcrypt.hash(req.body.password, 10);
-        const userName = req.body.userName;
+router.get("/:userName", (req, res, next) => {
+    const userName = req.params.userName;
 
-        db.query(user.registerUser(userName, hashedPassword), (err, data) => {
-            res.status(201).json({
-                message: "User added.",
-                userId: data.userId
-            });
+    getUserByUserName(userName, function (result) {
+        if (result && result.length > 0)
+            res.send(JSON.stringify(result));
+        else
+            res.status(statusCodes.NotFound).json(`User Not Found`);
+    });
+});
+
+
+var getUserByUserName = function (userName, callback) {
+    db.query(user.getUserByUserName(userName), (err, result) => {
+        if (err) throw err;
+        callback(result);
+    });
+}
+
+router.post("/register", async (req, res, next) => {
+    try {
+
+        const validatedObj = await validateRegister.validateAsync(req.body)
+        const hashedPassword = await bcrypt.hash(validatedObj.password, 10);
+
+        getUserByUserName(validatedObj.userName, function (result) {
+            if (result && result.length > 0)
+                res.status(statusCodes.Conflict).json(`User already exist`);
+            else {
+                db.query(user.registerUser(validatedObj.userName, hashedPassword), (err, data) => {
+                    res.status(statusCodes.Created).json({
+                        message: "User added.",
+                        userName: data.userName
+                    });
+                });
+            }
+
         });
 
-    // }
-    // catch
-    // {
-    //     res.status(500).send()
-    // }
+        
+
+    }
+    catch (error) {
+        if (error.isJoi === true) error.status = statusCodes.UnprocessableEntity
+        next(error)
+    }
 })
 
-// router.post('/login', async (req, res) => {
-//     const user = users.find(user => user.name === req.body.name)
-//     if (user == null) {
-//         return res.status(400).send('Cannot find user')
-//     }
-//     try {
-//         if (await bcrypt.compare(req.body.password, user.password)) {
-//             res.send('Success')
-//         } else {
-//             res.send('Not Allowed')
-//         }
-//     } catch {
-//         res.status(500).send()
-//     }
-// })
 
+
+router.post('/login', async (req, res) => {
+    const user = users.find(user => user.name === req.body.name)
+    if (user == null) {
+        return res.status(400).send('Cannot find user')
+    }
+    try {
+        if (await bcrypt.compare(req.body.password, user.password)) {
+            res.send('Success')
+        } else {
+            res.send('Not Allowed')
+        }
+    } catch {
+        res.status(500).send()
+    }
+})
 
 
 
 router.get("/", (req, res, next) => {
     db.query(User.getAllUsers(), (err, data) => {
         if (!err) {
-            res.status(200).json(data);
+            res.status(statusCodes.OK).json(data);
         }
     });
 });
+
 
 
 router.post("", (req, res, next) => {
     let user = new User(req.body.firstName, req.body.lastName, req.body.email, req.body.active, req.body.admin);
 
     db.query(user.addUser(), (err, data) => {
-        res.status(200).json({
+        res.status(statusCodes.Created).json({
             message: "User added.",
             userId: data.userId
         });
@@ -76,12 +111,12 @@ router.delete("/delete/:id", (req, res, next) => {
     db.query(User.deleteUser(userId), (err, data) => {
         if (!err) {
             if (data && data.affectedRows > 0) {
-                res.status(200).json({
+                res.status(statusCodes.NoContent).json({
                     message: `User deleted with id = ${userId}.`,
                     affectedRows: data.affectedRows
                 });
             } else {
-                res.status(200).json({
+                res.status(statusCodes.NotFound).json({
                     message: "User Not found."
                 });
             }
@@ -101,12 +136,12 @@ router.put("/:id", (req, res) => {
     db.query(user.updateUser(userId), (err, data) => {
         if (!err) {
             if (data && data.affectedRows > 0) {
-                res.status(200).json({
+                res.status(statusCodes.Accepted).json({
                     message: "User Updated",
                     affectedRows: data.affectedRows,
                 });
             } else {
-                res.status(200).json({
+                res.status(statusCodes.NotFound).json({
                     message: "User Not found.",
                 });
             }

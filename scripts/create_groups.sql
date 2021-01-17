@@ -12,4 +12,4 @@ name varchar(50)
 INSERT INTO groups (groupID, name) VALUES (-1, 'Unallocated');
 INSERT INTO groups (groupID, name) VALUES (1, 'Group 001');
 INSERT INTO groups (groupID, name) VALUES (3, 'Group 002');
-INSERT INTO groups (groupID, name) VALUES (5, 'New Group');
+INSERT INTO groups (groupID, name) VALUES (5, 'New Group');;

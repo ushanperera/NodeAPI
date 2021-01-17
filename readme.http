@@ -22,10 +22,30 @@
 
 
 # GET http://192.168.123.199:6001/products 
-//GET http://83.136.219.132:6001/items
+# GET http://83.136.219.132:6001/items
+
+//GET http://localhost:6001/items/test
 
 
-GET http://localhost:6001/items
+//GET http://localhost:6001/users/register
+
+
+POST http://localhost:6004/users/register
+Content-Type: application/json
+
+{
+  "userName": "usr003",
+  "password": "123"
+}
+
+
+
+# GET http://localhost:6004/users/1
+
+
+
+
+
 
 
 

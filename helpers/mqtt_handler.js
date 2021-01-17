@@ -7,7 +7,7 @@ class MqttHandler {
     this.username = ''; // mqtt credentials if these are needed to connect
     this.password = '';
   }
-  
+
   connect() {
     // Connect mqtt with credentials (in case of needed, otherwise we can omit 2nd param)
     this.mqttClient = mqtt.connect(this.host, { username: this.username, password: this.password });
@@ -41,7 +41,7 @@ class MqttHandler {
     this.mqttClient.publish(topic, message);
   }
   subscribe(topic) {
-    this.mqttClient.subscribe(topic, {qos: 0});
+    this.mqttClient.subscribe(topic, { qos: 0 });
   }
 }
 

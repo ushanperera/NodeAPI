@@ -83,14 +83,14 @@ router.put("/status", (req, res) => {
     let item_state = req.body.state == true ? '1' : '0';
     let item_macAddress = req.body.macAddress;
 
-     if(!item_id || item_id < 1){
+    if (!item_id || item_id < 1) {
         res.status(404).send('name is required')
         return;
-     }
-     else if(!item_id || item_id < 1){
+    }
+    else if (!item_id || item_id < 1) {
         res.status(404).send('name is required')
         return;
-     }
+    }
 
     // console.log(item_id + item_state);
     // res.send(item_id + item_state);
@@ -119,7 +119,7 @@ router.put("/status", (req, res) => {
     mqttClient.sendMessage(item_macAddress, item_state == "1" ? "SwitchOn" : "SwitchOff");
     // console.log(req.body);
     // console.log("subject :"  + item_macAddress + " State  : " + item_state);
-    
+
 });
 
 
