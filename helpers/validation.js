@@ -5,12 +5,13 @@ const validateRegister = Joi.object({
   password: Joi.string().min(2).required(),
 })
 
-const authSchema2 = Joi.object({
-  email: Joi.string().email().lowercase().required(),
+const validateLogin = Joi.object({
+  // email: Joi.string().email().lowercase().required(),
+  userName: Joi.string().lowercase().required(),
   password: Joi.string().min(2).required(),
 })
 
 module.exports = {
   validateRegister,
-  authSchema2
+  validateLogin
 }

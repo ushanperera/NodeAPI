@@ -5,7 +5,7 @@ const db = require('../helpers/database');
 const user = require('../Models/user');
 
 const statusCodes = require('../helpers/httpStatusCodes')
-const { validateRegister } = require('../helpers/validation');
+const { validateRegister, validateLogin } = require('../helpers/validation');
 
 const router = express.Router();
 
@@ -54,7 +54,7 @@ router.post("/register", async (req, res, next) => {
 
         });
 
-        
+
 
     }
     catch (error) {
@@ -65,19 +65,28 @@ router.post("/register", async (req, res, next) => {
 
 
 
-router.post('/login', async (req, res) => {
-    const user = users.find(user => user.name === req.body.name)
-    if (user == null) {
-        return res.status(400).send('Cannot find user')
-    }
+router.post('/login', async (req, res, next) => {
     try {
-        if (await bcrypt.compare(req.body.password, user.password)) {
-            res.send('Success')
-        } else {
-            res.send('Not Allowed')
-        }
-    } catch {
-        res.status(500).send()
+
+        const validatedObj = await validateLogin.validateAsync(req.body)
+
+        getUserByUserName(validatedObj.userName, function (result) {
+            if (result && result.length > 0) {
+                if (bcrypt.compareSync(validatedObj.password, result[0].password)) {
+                    res.status(statusCodes.Accepted).send('Success')
+                } else {
+                    res.status(statusCodes.Unauthorized).send('Not Allowed')
+                }
+            } else {
+                return res.status(statusCodes.NotFound).send('Cannot find user')
+            }
+        });
+
+
+    }
+    catch (error) {
+        if (error.isJoi === true) error.status = statusCodes.UnprocessableEntity
+        next(error)
     }
 })
 
