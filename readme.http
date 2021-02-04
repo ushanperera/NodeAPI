@@ -1,7 +1,7 @@
 # API calls: Create, Retrieve, Update, Delete becomes POST, GET, PUT, and DELETE
 # npm install nodemon -g --save --auto compile
 
-# npm run start -> for the Dev Environment
+# npm run start -> for the Production Environment
 # npm run dev -> for the Dev Environment
 
 # node server.js
