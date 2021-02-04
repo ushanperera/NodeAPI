@@ -22,19 +22,12 @@
 
 
 
+###
+GET http://83.136.219.132:6001/items
+###
 
-# GetAll
-
-
-# GET http://192.168.123.199:6001/products 
-# GET http://83.136.219.132:6001/items
-
-//GET http://localhost:6001/items/test
-
-
-//GET http://localhost:6001/users/register
-
-
+GET http://localhost:6000/users/register
+###
 POST http://localhost:6000/users/register
 Content-Type: application/json
 
