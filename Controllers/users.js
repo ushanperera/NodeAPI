@@ -45,7 +45,6 @@ function generateAccessToken(user) {
 
 router.post("/register", async (req, res, next) => {
     try {
-
         const validatedObj = await validateRegister.validateAsync(req.body)
         const hashedPassword = await bcrypt.hash(validatedObj.password, 10);
 
@@ -60,11 +59,7 @@ router.post("/register", async (req, res, next) => {
                     });
                 });
             }
-
         });
-
-
-
     }
     catch (error) {
         if (error.isJoi === true) error.status = statusCodes.UnprocessableEntity
@@ -103,9 +98,6 @@ router.post('/login', async (req, res, next) => {
             return res.status(statusCodes.NotFound).send('Cannot find user')
         }
     });
-
-
-
 
     // }
     // catch (error) {

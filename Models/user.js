@@ -8,12 +8,12 @@ class User {
     }
 
     static getAllUsers(userId) {
-        let sql = `SELECT * FROM user`;
+        let sql = `SELECT userId, userName, password, firstName, lastName, email, admin FROM user WHERE active=1`;
         return sql;
     }
 
     static getUserByUserName(userName) {
-        let sql = `SELECT * FROM user WHERE userName = '${userName}'`;
+        let sql = `SELECT userId, password FROM user WHERE active=1 and userName = '${userName}'`;
         return sql;
     }
 
