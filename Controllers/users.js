@@ -1,5 +1,8 @@
 const express = require('express');
+require('dotenv').config();
 const bcrypt = require('bcrypt')
+const jwt = require('jsonwebtoken')
+
 
 const db = require('../helpers/database');
 const user = require('../Models/user');
@@ -8,23 +11,23 @@ const statusCodes = require('../helpers/httpStatusCodes')
 const { validateRegister, validateLogin } = require('../helpers/validation');
 
 const router = express.Router();
-
+let refreshTokens = []
 
 
 // router.get("/test", (req, res, next) => {
 //     res.send('Hello!');
 // });
 
-router.get("/:userName", (req, res, next) => {
-    const userName = req.params.userName;
+// router.get("/:userName", (req, res, next) => {
+//     const userName = req.params.userName;
 
-    getUserByUserName(userName, function (result) {
-        if (result && result.length > 0)
-            res.send(JSON.stringify(result));
-        else
-            res.status(statusCodes.NotFound).json(`User Not Found`);
-    });
-});
+//     getUserByUserName(userName, function (result) {
+//         if (result && result.length > 0)
+//             res.send(JSON.stringify(result));
+//         else
+//             res.status(statusCodes.NotFound).json(`User Not Found`);
+//     });
+// });
 
 
 var getUserByUserName = function (userName, callback) {
@@ -33,6 +36,12 @@ var getUserByUserName = function (userName, callback) {
         callback(result);
     });
 }
+
+
+function generateAccessToken(user) {
+    return jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '55s' }) //eg: "1d", "20h", "60s" 
+}
+
 
 router.post("/register", async (req, res, next) => {
     try {
@@ -64,32 +73,87 @@ router.post("/register", async (req, res, next) => {
 })
 
 
-
 router.post('/login', async (req, res, next) => {
-    try {
+    // try {
 
-        const validatedObj = await validateLogin.validateAsync(req.body)
+    const validatedObj = await validateLogin.validateAsync(req.body)
 
-        getUserByUserName(validatedObj.userName, function (result) {
-            if (result && result.length > 0) {
-                if (bcrypt.compareSync(validatedObj.password, result[0].password)) {
-                    res.status(statusCodes.Accepted).send('Success')
-                } else {
-                    res.status(statusCodes.Unauthorized).send('Not Allowed')
+    getUserByUserName(validatedObj.userName, function (result) {
+        if (result && result.length > 0) {
+            if (bcrypt.compareSync(validatedObj.password, result[0].password)) {
+                // res.status(statusCodes.Accepted).send('Success')
+                {
+                    const username = validatedObj.userName
+                    const user = { name: username }
+
+                    //AccessToken- UserInformation
+                    const accessToken = generateAccessToken(user)
+
+                    //serialize the User(from secret key)
+                    const refreshToken = jwt.sign(user, process.env.REFRESH_TOKEN_SECRET)
+                    refreshTokens.push(refreshToken)
+                    res.json({ accessToken: accessToken, refreshToken: refreshToken })
+
+
                 }
             } else {
-                return res.status(statusCodes.NotFound).send('Cannot find user')
+                res.status(statusCodes.Unauthorized).send('Not Allowed')
             }
-        });
+        } else {
+            return res.status(statusCodes.NotFound).send('Cannot find user')
+        }
+    });
 
 
-    }
-    catch (error) {
-        if (error.isJoi === true) error.status = statusCodes.UnprocessableEntity
-        next(error)
-    }
+
+
+    // }
+    // catch (error) {
+    //     if (error.isJoi === true) error.status = statusCodes.UnprocessableEntity
+    //     next(error)
+    // }
 })
 
+
+
+router.post('/token', (req, res) => {
+    const refreshToken = req.body.token
+    if (refreshToken == null) return res.sendStatus(statusCodes.Unauthorized)
+    if (!refreshTokens.includes(refreshToken)) return res.sendStatus(statusCodes.Forbidden)
+
+    jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET, (err, user) => {
+        if (err) return res.sendStatus(statusCodes.Forbidden)
+
+        const accessToken = generateAccessToken({ name: user.name })
+        res.json({ accessToken: accessToken })
+    })
+})
+
+
+router.delete('/logout', (req, res) => {
+    refreshTokens = refreshTokens.filter(token => token !== req.body.token)
+    res.sendStatus(statusCodes.NoContent)
+})
+
+
+router.get('/posts', authenticateToken, (req, res) => {
+    // res.json(posts.filter(post => post.username === req.user.name))
+    res.status(statusCodes.OK).send('content is here')
+})
+
+
+function authenticateToken(req, res, next) {
+    const authHeader = req.headers['authorization']
+    const token = authHeader && authHeader.split(' ')[1] // to split 'Bearer XXXX' and take the token
+    if (token == null) return res.sendStatus(401)
+
+    jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
+        //console.log(err)
+        if (err) return res.status(statusCodes.Forbidden).send(err.message)
+        req.user = user
+        next() // Move on from middleware
+    })
+}
 
 
 router.get("/", (req, res, next) => {
@@ -99,7 +163,6 @@ router.get("/", (req, res, next) => {
         }
     });
 });
-
 
 
 router.post("", (req, res, next) => {
@@ -158,5 +221,6 @@ router.put("/:id", (req, res) => {
     });
 
 });
+
 
 module.exports = router;

@@ -13,6 +13,8 @@ const users = require('./Controllers/users')
 const app = express();
 
 app.use(cors());
+// app.use(express.json())
+
 app.use(bodyparser.json());
 app.use(bodyparser.urlencoded({ extended: false }));
 

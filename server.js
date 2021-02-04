@@ -1,5 +1,8 @@
 const http = require('http');
 const app = require('./routes');
+const dotenv = require('dotenv');
+
+dotenv.config();
 
 
 //Use system configuration for port or use 6001 by default.
