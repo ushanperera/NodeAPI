@@ -46,7 +46,7 @@ Content-Type: application/json
 
 //Request Initial token
 ###
-POST http://localhost:6000/users/login
+POST http://localhost:6000/login
 Content-Type: application/json
 
 {
@@ -58,27 +58,27 @@ Content-Type: application/json
 // Access the content
 ###
 GET http://localhost:6000/users/posts
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoidXNyMDAzIiwiaWF0IjoxNjEyNDMyMzk2LCJleHAiOjE2MTI0MzI0NTF9.EpzxsdidM_VxEG2hyK3e7PCei5qjqRGzUlwpTrssh0o
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoidXNyMDAzIiwiaWF0IjoxNjEyNDQ1Nzc3LCJleHAiOjE2MTI0NDU4MzJ9.N8qJmOSJHrsNeflIMz4qUG_-dtP5n0RkviKTXqM1BeQ
 
 
 
 //Request for new token (send the refresh token to get a new access token)
 ###
-POST http://localhost:6000/users/token
+POST http://localhost:6000/token
 Content-Type: application/json
 
 {
-  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoidXNyMDAzIiwiaWF0IjoxNjEyNDM0MzA0fQ.CIRgNFbPbDhlI-XuEpi-Y1eRkVCF-mQfyfXov0QPwlo"
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoidXNyMDAzIiwiaWF0IjoxNjEyNDQyNzAxfQ.P5vG_uVlZqnx6t21p5IDcAWyAHk9NJOSkl-8PYO5Neo"
 }
 
 
 //Delete the refresh token from the server
 ###
-DELETE http://localhost:6000/users/logout
+DELETE http://localhost:6000/logout
 Content-Type: application/json
 
 {
-  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoidXNyMDAzIiwiaWF0IjoxNjEyNDM0MzA0fQ.CIRgNFbPbDhlI-XuEpi-Y1eRkVCF-mQfyfXov0QPwlo"
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoidXNyMDAzIiwiaWF0IjoxNjEyNDQyNzAxfQ.P5vG_uVlZqnx6t21p5IDcAWyAHk9NJOSkl-8PYO5Neo"
 }
 
 

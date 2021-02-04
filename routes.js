@@ -6,6 +6,7 @@ const cors = require('cors')
 const items = require('./Controllers/items')
 const groups = require('./Controllers/groups')
 const users = require('./Controllers/users')
+const jwt_handler = require('./Controllers/authentication')
 
 // const mqttHandler = require('./mqtt/mqtt_handler');
 
@@ -21,6 +22,7 @@ app.use(bodyparser.urlencoded({ extended: false }));
 app.use("/items", items);
 app.use("/groups", groups);
 app.use("/users", users);
+app.use("/", jwt_handler);
 
 
 
