@@ -54,14 +54,6 @@ Content-Type: application/json
   "password": "123"
 }
 
-//Request for new token (send the refresh token to get a new access token)
-###
-POST http://localhost:6000/users/token
-Content-Type: application/json
-
-{
-  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoidXNyMDAzIiwiaWF0IjoxNjEyNDMxMzkwfQ.14OiFpgNe7OMZdSab86cJKrrDL03GqlRxDx-vYjv_rg"
-}
 
 // Access the content
 ###
@@ -69,6 +61,25 @@ GET http://localhost:6000/users/posts
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoidXNyMDAzIiwiaWF0IjoxNjEyNDMyMzk2LCJleHAiOjE2MTI0MzI0NTF9.EpzxsdidM_VxEG2hyK3e7PCei5qjqRGzUlwpTrssh0o
 
 
+
+//Request for new token (send the refresh token to get a new access token)
+###
+POST http://localhost:6000/users/token
+Content-Type: application/json
+
+{
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoidXNyMDAzIiwiaWF0IjoxNjEyNDM0MzA0fQ.CIRgNFbPbDhlI-XuEpi-Y1eRkVCF-mQfyfXov0QPwlo"
+}
+
+
+//Delete the refresh token from the server
+###
+DELETE http://localhost:6000/users/logout
+Content-Type: application/json
+
+{
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoidXNyMDAzIiwiaWF0IjoxNjEyNDM0MzA0fQ.CIRgNFbPbDhlI-XuEpi-Y1eRkVCF-mQfyfXov0QPwlo"
+}
 
 
 

@@ -11,7 +11,7 @@ const statusCodes = require('../helpers/httpStatusCodes')
 const { validateRegister, validateLogin } = require('../helpers/validation');
 
 const router = express.Router();
-let refreshTokens = []
+let refreshTokens = [] // Store this list in a DB or state server
 
 
 // router.get("/test", (req, res, next) => {
